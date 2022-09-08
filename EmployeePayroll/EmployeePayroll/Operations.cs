@@ -20,7 +20,27 @@ namespace EmployeePayroll
             );
             Console.WriteLine(this.employeeDatalist.ToString());
         }
+        public void AddEmployeePayrollThread(List<EmployeeModel> employeeDatalist)
+        {
+            employeeDatalist.ForEach(employeeData =>
+
+            {
+                Task thread = new Task(() =>
+                {
+                    Console.WriteLine("Employee being added: " + employeeData.EmployeeName);
+                    this.AddEmployeePayrollThread(employeeData);
+                    Console.WriteLine("Employee added: " + employeeData.EmployeeName);
+
+                });
+                thread.Start();
+            });
+            Console.WriteLine(this.employeeDatalist.Count);
+        }
         public void AddEmployeePayroll(EmployeeModel emp)
+        {
+            employeeDatalist.Add(emp);
+        }
+        public void AddEmployeePayrollThread(EmployeeModel emp)
         {
             employeeDatalist.Add(emp);
         }
